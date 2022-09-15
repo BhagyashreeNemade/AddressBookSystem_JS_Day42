@@ -1,4 +1,3 @@
-var prompt = require("prompt-sync")({sigint: true});
 class Person
 {
     //properties
@@ -36,7 +35,7 @@ try
     let addresspattern = new RegExp('^[A-za-z\\s]{4,}$');
     let emailPattern = new RegExp('^[a-z]([+. \-_]{1}\w+)?@[a-z0-9]+\.[a-z]{2,3}(\.[a-z]{2})?$');
     let phoneNumPattern =new RegExp('^[0-9]\\s[0-9]{10}$');
-    let zipCodePattern = new RegExp('^[1-9](1)[0-9]{2,}$');
+    let zipCodePattern = new RegExp('^[1-9]{1}[0-9]{2}\\s?[0-9]{3}$');
     //FirstName
     let firstName = prompt('Enter FirstName: ');
     if(!namePattern.test(firstName))
@@ -78,3 +77,49 @@ catch(e)
 {
     console.error(e);
 }
+let AddContacts = () =>
+{
+    let numOfPersons = parseInt(prompt('Enter Number of contacts you want to add? : '));
+    while(numOfPersons--)
+    {
+        let person = ValidateAndAdd();
+        addressBookPersonArr.push(person);
+        console.log("***********************");
+    }
+}
+let DisplayContacts = () =>
+{
+    console.log("AddressBook");
+   addressBookPersonArr.forEach(x => console.log(x.toString())); 
+}
+let AddressBookOperations = () =>
+{
+    try
+    {
+        while(true)
+        {
+            console.log("\n1.Add new contacts to addressbook\n2.Display\n3.exit");
+            switch(parseInt(prompt('Enter the choice? : ')))
+            {
+                case 1:
+                    AddContacts();
+                    break;
+                case 2:
+                    DisplayContacts();
+                    break;
+                case 3:
+                    console.log("Exited");
+                    return;
+                default:
+                    console.log("Enter Valid Option");
+                    break;
+            }
+        }
+    }
+    catch(e)
+    {
+        console.error(e);
+    }   
+        
+}
+AddressBookOperations();
